@@ -1,0 +1,106 @@
+
+import java.awt.Color;
+
+public class utils {
+
+	public static void main(String[] args) {
+		//create new image utility
+		ImageUtils utils=new ImageUtils();
+		//load in image
+		Color [] [] orig=utils.loadImage("src/LennaCV.png");
+		// add orginal image to tab
+		utils.addImage(orig,"Orginal image.");
+		
+		// process the image
+		Color [] [] halfBlue=process(orig);
+		utils.addImage(halfBlue,"Half Blue");
+		
+		//display
+		utils.display();
+		
+				
+				ImageUtils utils3=new ImageUtils();
+				//load in image
+				Color [] [] third=utils.loadImage("src/LennaCV.png");
+				
+				// process the image
+				Color [] [] Negative=Negative(orig);
+				utils.addImage(Negative,"Negative");
+				
+				//display
+				utils.display();
+		
+
+				ImageUtils utils4=new ImageUtils();
+				//load in image
+				Color [] [] fourth=utils.loadImage("src/LennaCV.png");
+				
+				// process the image
+				Color [] [] Gray=Gray(orig);
+				utils.addImage(Gray,"GrayScale");
+				
+				//display
+				utils.display();
+		
+		
+		
+	}
+	public static Color [] [] process (Color [] [] img){
+		Color[] [] tmp=ImageUtils.cloneArray(img);
+		for(int i=0; i< tmp.length; i++) {
+			for(int j=0; j<tmp[i].length;j++) {
+				if (i<tmp.length/2) {
+					Color pixel=tmp[i][j];
+					int r=pixel.getRed();
+					int b=pixel.getBlue();
+					int g=pixel.getGreen();
+
+					tmp[i][j]=new Color (0,0,b);
+					//If you just want to display one color put that variable into the new color
+				}
+			}
+		}
+		return tmp;
+		
+		
+	}
+	
+
+	
+	public static Color[][] Negative(Color[][] img){
+		Color[][] tmp= ImageUtils.cloneArray(img);
+		for( int i=0; i < tmp.length; i++) {
+			for( int j=0; j < tmp[i].length; j++) {
+				Color pixel = img[i][j];
+				int r = pixel.getRed();
+				int g = pixel.getGreen();
+				int b = pixel.getBlue();
+				int newRed= 255-r;
+				int newGreen=255-g;
+				int newBlue=255-b;
+				
+				tmp[i][j]= new Color(newRed,newGreen,newBlue);
+			}
+		}
+		return tmp;
+	}
+	
+	
+	public static Color[][] Gray(Color[][] img){
+		Color[][] tmp= ImageUtils.cloneArray(img);
+		for( int i=0; i < tmp.length; i++) {
+			for( int j=0; j < tmp[i].length; j++) {
+				Color pixel = img[i][j];
+				int r = pixel.getRed();
+				int g = pixel.getGreen();
+				int b = pixel.getBlue();
+				int average= (r+b+g)/3;
+				int newr=average-32;
+				int newg=average-32;
+				int newb= average-32;
+				tmp[i][j]= new Color(newr,newg,newb);
+			}
+		}
+		return tmp;
+	}
+}
